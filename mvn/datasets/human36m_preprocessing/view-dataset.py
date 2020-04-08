@@ -8,6 +8,7 @@
 import torch
 import numpy as np
 import cv2
+from matplotlib import pyplot as plt
 
 import os, sys
 
@@ -34,7 +35,7 @@ dataset = Human36MMultiViewDataset(
     scale_bbox=1.0,
     kind='human36m',
     norm_image=False,
-    undistort_images=True,
+    undistort_images=False,
     ignore_cameras=[])
 print(len(dataset))
 
@@ -67,9 +68,9 @@ while True:
     camera_name = dataset.labels['camera_names'][camera_idx]
     frame_idx = sample_info['frame_idx']
 
-    cv2.imshow('w', display)
-    cv2.setWindowTitle('w', f"{subject_name}/{action_name}/{camera_name}/{frame_idx}")
-    cv2.waitKey(0)
+    cv2.imwrite('/home/weiwang/Desktop/{subject_name}-{action_name}-{camera_name}-{frame_idx}.png',display)
+    # cv2.setWindowTitle('w', f"{subject_name}/{action_name}/{camera_name}/{frame_idx}")
+    # cv2.waitKey(0)
 
     action = dataset.labels['table'][sample_idx]['action_idx']
     if action != prev_action: # started a new action
